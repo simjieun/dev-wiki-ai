@@ -19,6 +19,7 @@
     "react-markdown": "latest",
     "remark-gfm": "latest",
     "rehype-highlight": "latest",
+    "server-only": "latest",
     "zod": "latest"
   },
   "devDependencies": {

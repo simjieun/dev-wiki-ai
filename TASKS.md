@@ -12,9 +12,38 @@
 
 ---
 
+## 현재 진행 상태
+
+- 마지막 완료 태스크: `P1-2. Supabase client 작성`
+- 다음 진행 태스크: `P2-1. 문서 등록 UI 작성`
+- Supabase 프로젝트: `devwiki-ai`
+- Supabase project id/ref: `rfsnhfjdxneaoijlswtp`
+- Supabase region: `ap-northeast-2`
+- Supabase URL: `https://rfsnhfjdxneaoijlswtp.supabase.co`
+- GitHub 저장소: `https://github.com/simjieun/llm-dev-wiki`
+- 현재 미커밋 변경: `supabase/schema.sql`, `lib/supabase/server.ts`, `package.json`, `pnpm-lock.yaml`
+
+### 완료된 검증
+
+- P1-1 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- P1-2 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- Supabase migration 적용 완료
+  - `initial_rag_schema`
+  - `harden_rag_schema_search_path`
+
+### 다음 작업 시작 전 확인
+
+- `.env.local`에 아래 값이 필요하다.
+  - `NEXT_PUBLIC_SUPABASE_URL`
+  - `SUPABASE_SERVICE_ROLE_KEY`
+- 다음 작업은 `P2-1`만 진행한다.
+- `P2-1` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
+
+---
+
 # Phase 0. 프로젝트 기본 세팅
 
-## P0-1. Next.js 프로젝트 실행 가능 상태 만들기
+## P0-1. Next.js 프로젝트 실행 가능 상태 만들기 - 완료
 
 ### 목표
 
@@ -38,7 +67,7 @@
 
 # Phase 1. DB / Supabase / pgvector
 
-## P1-1. Supabase schema 작성
+## P1-1. Supabase schema 작성 - 완료
 
 ### 목표
 
@@ -56,7 +85,16 @@
 
 - `supabase/schema.sql` 실행 시 테이블과 RPC가 생성됨
 
-## P1-2. Supabase client 작성
+### 완료 메모
+
+- 새 Supabase 프로젝트 `devwiki-ai` 생성 완료
+- `documents`, `document_chunks`, `wiki_pages` 테이블 생성 완료
+- `pgcrypto`, `vector` extension 활성화 완료
+- `match_document_chunks` RPC 생성 완료
+- RLS 활성화 완료
+- 보안 advisor WARN 항목 보정 완료
+
+## P1-2. Supabase client 작성 - 완료
 
 ### 목표
 
@@ -70,6 +108,12 @@
 ### 완료 조건
 
 - Route Handler에서 Supabase client import 가능
+
+### 완료 메모
+
+- `lib/supabase/server.ts` 작성 완료
+- `server-only`로 서버 전용 모듈 처리 완료
+- `NEXT_PUBLIC_SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` 누락 시 명확한 에러 처리 완료
 
 ---
 
