@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { embedTexts } from "@/lib/ai/embedding";
+import { chunkText } from "@/lib/rag/chunk";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 
 export const runtime = "nodejs";
@@ -11,6 +13,13 @@ const createDocumentSchema = z.object({
 });
 
 type CreateDocumentInput = z.infer<typeof createDocumentSchema>;
+
+type DocumentChunkInsert = {
+  document_id: string;
+  content: string;
+  chunk_index: number;
+  embedding: number[];
+};
 
 function normalizeDocumentInput(input: CreateDocumentInput) {
   return {
@@ -26,6 +35,11 @@ function getSaveErrorMessage(error: unknown): string {
   }
 
   return "Failed to save document.";
+}
+
+async function deleteDocumentById(documentId: string) {
+  const supabase = createSupabaseServerClient();
+  await supabase.from("documents").delete().eq("id", documentId);
 }
 
 export async function POST(request: Request) {
@@ -55,6 +69,16 @@ export async function POST(request: Request) {
   try {
     const supabase = createSupabaseServerClient();
     const document = normalizeDocumentInput(result.data);
+    const chunks = chunkText(document.content);
+
+    if (chunks.length === 0) {
+      return NextResponse.json(
+        { error: "Document content did not produce any chunks." },
+        { status: 400 },
+      );
+    }
+
+    const embeddings = await embedTexts(chunks);
 
     const { data, error } = await supabase
       .from("documents")
@@ -69,7 +93,30 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json({ id: data.id }, { status: 201 });
+    const chunkRows: DocumentChunkInsert[] = chunks.map((chunk, index) => ({
+      document_id: data.id,
+      content: chunk,
+      chunk_index: index,
+      embedding: embeddings[index],
+    }));
+
+    const { error: chunkError } = await supabase
+      .from("document_chunks")
+      .insert(chunkRows);
+
+    if (chunkError) {
+      await deleteDocumentById(data.id);
+
+      return NextResponse.json(
+        { error: "Failed to save document chunks." },
+        { status: 500 },
+      );
+    }
+
+    return NextResponse.json(
+      { id: data.id, chunkCount: chunkRows.length },
+      { status: 201 },
+    );
   } catch (error) {
     return NextResponse.json(
       { error: getSaveErrorMessage(error) },
