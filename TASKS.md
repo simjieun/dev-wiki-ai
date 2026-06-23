@@ -14,8 +14,8 @@
 
 ## 현재 진행 상태
 
-- 마지막 완료 태스크: `P3-1. Chunking 함수 작성`
-- 다음 진행 태스크: `P3-2. Embedding 함수 작성`
+- 마지막 완료 태스크: `P3-2. Embedding 함수 작성`
+- 다음 진행 태스크: `P3-3. 문서 저장 시 chunk + embedding 저장`
 - Supabase 프로젝트: `devwiki-ai`
 - Supabase project id/ref: `rfsnhfjdxneaoijlswtp`
 - Supabase region: `ap-northeast-2`
@@ -36,6 +36,8 @@
 - P2-2 검증용 테스트 문서 삭제 확인
 - P3-1 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
 - P3-1 완료 후 chunk 런타임 검증 통과
+- P3-2 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- P3-2 완료 후 서버 조건 런타임에서 빈 배열 입력 검증 통과
 - Supabase migration 적용 완료
   - `initial_rag_schema`
   - `harden_rag_schema_search_path`
@@ -45,8 +47,9 @@
 - `.env.local`에 아래 값이 필요하다.
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `SUPABASE_SERVICE_ROLE_KEY`
-- 다음 작업은 `P3-2`만 진행한다.
-- `P3-2` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
+- 다음 작업은 `P3-3`만 진행한다.
+- `OPENAI_API_KEY` 설정 후 embedding 및 ingestion 라이브 검증을 수행한다.
+- `P3-3` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
 
 ---
 
@@ -206,7 +209,7 @@
 - 빈 문자열 입력 시 빈 배열 반환 확인
 - 1900자 입력 시 `[800, 800, 540]` chunk 및 overlap 동작 확인
 
-## P3-2. Embedding 함수 작성
+## P3-2. Embedding 함수 작성 - 완료
 
 ### 목표
 
@@ -221,6 +224,14 @@ OpenAI embedding API를 이용해 텍스트를 벡터로 변환한다.
 ### 완료 조건
 
 - 문자열 배열 입력 시 embedding 배열 반환
+
+### 완료 메모
+
+- `lib/ai/embedding.ts` 작성 완료
+- `text-embedding-3-small` 사용 완료
+- 문자열 배열 batch embedding 함수 `embedTexts` 구현 완료
+- 빈 배열 입력 시 빈 배열 반환 확인
+- `.env.local`에 `OPENAI_API_KEY`가 없어 실제 OpenAI API 호출은 P3-3에서 키 설정 후 라이브 검증 필요
 
 ## P3-3. 문서 저장 시 chunk + embedding 저장
 
