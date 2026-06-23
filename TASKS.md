@@ -14,8 +14,8 @@
 
 ## 현재 진행 상태
 
-- 마지막 완료 태스크: `P3-3. 문서 저장 시 chunk + embedding 저장 구현`
-- 다음 진행 태스크: `OPENAI_API_KEY 설정 후 P3-3 라이브 검증`
+- 마지막 완료 태스크: `P3-3. 문서 저장 시 chunk + embedding 저장`
+- 다음 진행 태스크: `Phase 4 진행 여부 확인 후 P4-1. 질문 UI 작성`
 - Supabase 프로젝트: `devwiki-ai`
 - Supabase project id/ref: `rfsnhfjdxneaoijlswtp`
 - Supabase region: `ap-northeast-2`
@@ -40,6 +40,9 @@
 - P3-2 완료 후 서버 조건 런타임에서 빈 배열 입력 검증 통과
 - P3-3 구현 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
 - P3-3 구현 후 `OPENAI_API_KEY` 미설정 시 JSON 500 응답 확인
+- P3-3 라이브 검증 후 `/api/documents` 저장 성공 `201` 및 `{ id, chunkCount }` 응답 확인
+- P3-3 라이브 검증에서 `document_chunks` 13개 저장 확인
+- P3-3 검증용 테스트 문서와 chunks 삭제 확인
 - Supabase migration 적용 완료
   - `initial_rag_schema`
   - `harden_rag_schema_search_path`
@@ -49,9 +52,8 @@
 - `.env.local`에 아래 값이 필요하다.
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `SUPABASE_SERVICE_ROLE_KEY`
-- `.env.local`에 `OPENAI_API_KEY`를 추가한 뒤 embedding 및 ingestion 라이브 검증을 수행한다.
-- 라이브 검증에서 문서 1개 등록 시 `document_chunks`에 여러 chunk가 저장되는지 확인한다.
-- P3-3 라이브 검증 완료 전에는 Phase 4로 넘어가지 않는다.
+- Phase 3 완료.
+- Phase 4는 사용자 승인 후 진행한다.
 
 ---
 
@@ -235,7 +237,7 @@ OpenAI embedding API를 이용해 텍스트를 벡터로 변환한다.
 - 빈 배열 입력 시 빈 배열 반환 확인
 - `.env.local`에 `OPENAI_API_KEY`가 없어 실제 OpenAI API 호출은 P3-3에서 키 설정 후 라이브 검증 필요
 
-## P3-3. 문서 저장 시 chunk + embedding 저장 - 구현 완료 / 라이브 검증 대기
+## P3-3. 문서 저장 시 chunk + embedding 저장 - 완료
 
 ### 목표
 
@@ -257,7 +259,8 @@ OpenAI embedding API를 이용해 텍스트를 벡터로 변환한다.
 - `embedTexts`를 사용한 embedding 생성 연결 완료
 - `document_chunks` insert 구현 완료
 - chunk 저장 실패 시 생성된 document 삭제 처리 구현 완료
-- `.env.local`에 `OPENAI_API_KEY`가 없어 실제 embedding 생성 및 여러 chunk 저장 라이브 검증은 대기 중
+- OpenAI embedding 생성 및 `document_chunks` 13개 저장 라이브 검증 완료
+- 검증용 document 삭제 시 cascade로 chunks 삭제되는 것 확인
 
 ---
 
