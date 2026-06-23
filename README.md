@@ -25,6 +25,10 @@ pnpm install
 pnpm dev
 ```
 
+## 디자인 기준
+
+UI 구현 기준은 [docs/DESIGN.md](docs/DESIGN.md)를 참고하세요.
+
 ## 환경 변수
 
 `.env.local` 파일을 생성하세요.

@@ -14,14 +14,14 @@
 
 ## 현재 진행 상태
 
-- 마지막 완료 태스크: `P2-1. 문서 등록 UI 작성`
-- 다음 진행 태스크: `P2-2. 문서 저장 API 작성`
+- 마지막 완료 태스크: `P2-2. 문서 저장 API 작성`
+- 다음 진행 태스크: `P3-1. Chunking 함수 작성`
 - Supabase 프로젝트: `devwiki-ai`
 - Supabase project id/ref: `rfsnhfjdxneaoijlswtp`
 - Supabase region: `ap-northeast-2`
 - Supabase URL: `https://rfsnhfjdxneaoijlswtp.supabase.co`
 - GitHub 저장소: `https://github.com/simjieun/llm-dev-wiki`
-- 현재 미커밋 변경: `app/documents/new/page.tsx`, `app/documents/new/document-form.tsx`, `TASKS.md`
+- 현재 미커밋 변경: `docs/DESIGN.md`, `TASKS.md`, `app/api/documents/route.ts`, 디자인 시스템 UI 변경 파일
 
 ### 완료된 검증
 
@@ -29,6 +29,11 @@
 - P1-2 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
 - P2-1 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
 - P2-1 완료 후 `pnpm dev`에서 `/documents/new` 200 응답과 폼 렌더링 확인
+- P2-2 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- P2-2 완료 후 `/api/documents` invalid JSON 400 응답 확인
+- P2-2 완료 후 `/api/documents` zod validation 400 응답 확인
+- P2-2 완료 후 `/api/documents` 저장 성공 `201` 및 `{ id }` 응답 확인
+- P2-2 검증용 테스트 문서 삭제 확인
 - Supabase migration 적용 완료
   - `initial_rag_schema`
   - `harden_rag_schema_search_path`
@@ -38,8 +43,8 @@
 - `.env.local`에 아래 값이 필요하다.
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `SUPABASE_SERVICE_ROLE_KEY`
-- 다음 작업은 `P2-2`만 진행한다.
-- `P2-2` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
+- 다음 작업은 `P3-1`만 진행한다.
+- `P3-1` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
 
 ---
 
@@ -145,7 +150,7 @@
 - submit 시 `/api/documents`로 JSON POST 요청하도록 구현 완료
 - API 구현은 `P2-2`에서 진행한다.
 
-## P2-2. 문서 저장 API 작성
+## P2-2. 문서 저장 API 작성 - 완료
 
 ### 목표
 
@@ -161,6 +166,15 @@
 ### 완료 조건
 
 - 문서 저장 성공 시 document id 반환
+
+### 완료 메모
+
+- `app/api/documents/route.ts` 생성 완료
+- POST 요청 JSON parsing 구현 완료
+- zod validation 구현 완료
+- Supabase `documents` insert 구현 완료
+- 성공 시 `{ id }`를 `201`로 반환하도록 구현 완료
+- 로컬 `.env.local`의 `SUPABASE_SERVICE_ROLE_KEY`로 실제 저장 성공 라이브 검증 완료
 
 ---
 
