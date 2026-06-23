@@ -14,8 +14,8 @@
 
 ## 현재 진행 상태
 
-- 마지막 완료 태스크: `P2-2. 문서 저장 API 작성`
-- 다음 진행 태스크: `P3-1. Chunking 함수 작성`
+- 마지막 완료 태스크: `P3-1. Chunking 함수 작성`
+- 다음 진행 태스크: `P3-2. Embedding 함수 작성`
 - Supabase 프로젝트: `devwiki-ai`
 - Supabase project id/ref: `rfsnhfjdxneaoijlswtp`
 - Supabase region: `ap-northeast-2`
@@ -34,6 +34,8 @@
 - P2-2 완료 후 `/api/documents` zod validation 400 응답 확인
 - P2-2 완료 후 `/api/documents` 저장 성공 `201` 및 `{ id }` 응답 확인
 - P2-2 검증용 테스트 문서 삭제 확인
+- P3-1 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- P3-1 완료 후 chunk 런타임 검증 통과
 - Supabase migration 적용 완료
   - `initial_rag_schema`
   - `harden_rag_schema_search_path`
@@ -43,8 +45,8 @@
 - `.env.local`에 아래 값이 필요하다.
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `SUPABASE_SERVICE_ROLE_KEY`
-- 다음 작업은 `P3-1`만 진행한다.
-- `P3-1` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
+- 다음 작업은 `P3-2`만 진행한다.
+- `P3-2` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
 
 ---
 
@@ -180,7 +182,7 @@
 
 # Phase 3. RAG Ingestion
 
-## P3-1. Chunking 함수 작성
+## P3-1. Chunking 함수 작성 - 완료
 
 ### 목표
 
@@ -196,6 +198,13 @@
 ### 완료 조건
 
 - content 입력 시 chunk 배열 반환
+
+### 완료 메모
+
+- `lib/rag/chunk.ts` 작성 완료
+- 기본 chunk size `800`, overlap `120` 적용 완료
+- 빈 문자열 입력 시 빈 배열 반환 확인
+- 1900자 입력 시 `[800, 800, 540]` chunk 및 overlap 동작 확인
 
 ## P3-2. Embedding 함수 작성
 
