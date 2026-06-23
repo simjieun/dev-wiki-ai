@@ -21,27 +21,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="font-sans antialiased">
-        <div className="min-h-screen">
-          <header className="border-b border-slate-200 bg-white/80">
-            <nav className="mx-auto flex max-w-5xl flex-col gap-4 px-6 py-5 sm:flex-row sm:items-center sm:justify-between">
-              <Link href="/" className="text-lg font-semibold text-slate-950">
+      <body>
+        <div className="app-shell">
+          <header className="app-header">
+            <nav className="app-nav" aria-label="Primary">
+              <Link href="/" className="brand-link">
                 DevWiki AI
               </Link>
               <div className="flex flex-wrap gap-2">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="rounded-md px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100 hover:text-slate-950"
-                  >
+                  <Link key={item.href} href={item.href} className="nav-link">
                     {item.label}
                   </Link>
                 ))}
               </div>
             </nav>
           </header>
-          <main className="mx-auto max-w-5xl px-6 py-10">{children}</main>
+          <main className="app-main">{children}</main>
         </div>
       </body>
     </html>

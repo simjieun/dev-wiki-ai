@@ -14,19 +14,21 @@
 
 ## 현재 진행 상태
 
-- 마지막 완료 태스크: `P1-2. Supabase client 작성`
-- 다음 진행 태스크: `P2-1. 문서 등록 UI 작성`
+- 마지막 완료 태스크: `P2-1. 문서 등록 UI 작성`
+- 다음 진행 태스크: `P2-2. 문서 저장 API 작성`
 - Supabase 프로젝트: `devwiki-ai`
 - Supabase project id/ref: `rfsnhfjdxneaoijlswtp`
 - Supabase region: `ap-northeast-2`
 - Supabase URL: `https://rfsnhfjdxneaoijlswtp.supabase.co`
 - GitHub 저장소: `https://github.com/simjieun/llm-dev-wiki`
-- 현재 미커밋 변경: `supabase/schema.sql`, `lib/supabase/server.ts`, `package.json`, `pnpm-lock.yaml`
+- 현재 미커밋 변경: `app/documents/new/page.tsx`, `app/documents/new/document-form.tsx`, `TASKS.md`
 
 ### 완료된 검증
 
 - P1-1 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
 - P1-2 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- P2-1 완료 후 `pnpm typecheck`, `pnpm lint`, `pnpm build` 통과
+- P2-1 완료 후 `pnpm dev`에서 `/documents/new` 200 응답과 폼 렌더링 확인
 - Supabase migration 적용 완료
   - `initial_rag_schema`
   - `harden_rag_schema_search_path`
@@ -36,8 +38,8 @@
 - `.env.local`에 아래 값이 필요하다.
   - `NEXT_PUBLIC_SUPABASE_URL`
   - `SUPABASE_SERVICE_ROLE_KEY`
-- 다음 작업은 `P2-1`만 진행한다.
-- `P2-1` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
+- 다음 작업은 `P2-2`만 진행한다.
+- `P2-2` 완료 후 검증하고, 변경사항과 검증 결과를 요약한다.
 
 ---
 
@@ -119,7 +121,7 @@
 
 # Phase 2. 문서 등록
 
-## P2-1. 문서 등록 UI 작성
+## P2-1. 문서 등록 UI 작성 - 완료
 
 ### 목표
 
@@ -136,6 +138,12 @@
 ### 완료 조건
 
 - 입력값을 `/api/documents`로 POST 요청할 수 있음
+
+### 완료 메모
+
+- `/documents/new`에 title, tags, content 입력 UI 구현 완료
+- submit 시 `/api/documents`로 JSON POST 요청하도록 구현 완료
+- API 구현은 `P2-2`에서 진행한다.
 
 ## P2-2. 문서 저장 API 작성
 
